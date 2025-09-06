@@ -1,0 +1,41 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_crud
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: crud_database
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - crud_network
+
+  python_app:
+    build: .
+    container_name: python_crud_app
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/
+      - MONGODB_DATABASE=crud_database
+    volumes:
+      - .:/app
+    working_dir: /app
+    networks:
+      - crud_network
+    stdin_open: true
+    tty: true
+    command: tail -f /dev/null  # Mantém o container rodando
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  crud_network:
+    driver: bridge
