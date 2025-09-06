@@ -291,6 +291,6 @@ Projeto desenvolvido para fins educacionais - Atividade P1 BD.
 
 ---
 
-**Desenvolvido por:** [Seu Nome]  
+**Desenvolvido por:** [Patrick Oliveira]  
 **Disciplina:** Banco de Dados  
-**Data:** 2024
+**Data:** -05-09-2025
